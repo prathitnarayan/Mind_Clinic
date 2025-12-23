@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { createAppointment } from '../services/api'; 
+
 import { Calendar, Clock, Phone, Mail, MapPin, Award, Users, Heart, CheckCircle, Star, Menu, X, ChevronRight } from 'lucide-react';
 
 export default function Home() {
@@ -35,18 +37,54 @@ export default function Home() {
     { name: 'Amit Patel', rating: 5, text: 'Life-changing therapy sessions. Highly recommend to anyone struggling with stress.' }
   ];
 
-  const handleBookingSubmit = () => {
-    if (bookingStep < 3) {
-      setBookingStep(bookingStep + 1);
-    } else {
-      alert('Booking confirmed! You will receive a confirmation email shortly.');
-      setShowBookingModal(false);
-      setBookingStep(1);
-      setBookingData({
-        name: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
-      });
-    }
-  };
+  // const handleBookingSubmit = () => {
+  //   if (bookingStep < 3) {
+  //     setBookingStep(bookingStep + 1);
+  //   } else {
+  //     alert('Booking confirmed! You will receive a confirmation email shortly.');
+  //     setShowBookingModal(false);
+  //     setBookingStep(1);
+  //     setBookingData({
+  //       name: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
+  //     });
+  //   }
+  // };
+
+  const handleBookingSubmit = async () => {
+  if (bookingStep < 3) {
+    setBookingStep(bookingStep + 1);
+    return;
+  }
+
+  try {
+    await createAppointment({
+      name: bookingData.name,
+      email: bookingData.email,
+      phone: bookingData.phone,
+      service: bookingData.service,
+      date: bookingData.date,
+      time: bookingData.time,
+      notes: bookingData.notes
+    });
+
+    alert('Booking confirmed!');
+    setShowBookingModal(false);
+    setBookingStep(1);
+    setBookingData({
+      name: '',
+      email: '',
+      phone: '',
+      date: '',
+      time: '',
+      service: '',
+      notes: ''
+    });
+  } catch (error) {
+    console.error(error);
+    alert('Failed to book appointment. Please try again.');
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-white">

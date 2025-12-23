@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api'
+  baseURL: 'https://mind-clinic.onrender.com/api',
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
-api.interceptors.request.use((req) => {
-  const token = localStorage.getItem('token');
-  if (token) req.headers.Authorization = `Bearer ${token}`;
-  return req;
-});
+export const createAppointment = (data) =>
+  api.post('/appointments', data);
 
 export default api;
