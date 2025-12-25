@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createAppointment } from '../services/api'; 
-
 import { Calendar, Clock, Phone, Mail, MapPin, Award, Users, Heart, CheckCircle, Star, Menu, X, ChevronRight } from 'lucide-react';
 
 export default function Home() {
@@ -16,6 +15,7 @@ export default function Home() {
     notes: ''
   });
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
   const services = [
     { name: 'General Consultation', duration: '30 mins', price: '₹500' },
@@ -26,65 +26,106 @@ export default function Home() {
     { name: 'Career Counseling', duration: '40 mins', price: '₹700' }
   ];
 
-  const timeSlots = [
-    '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
-  ];
-
   const testimonials = [
     { name: 'Rajesh Kumar', rating: 5, text: 'Excellent doctor with great listening skills. Helped me overcome my anxiety issues.' },
     { name: 'Priya Sharma', rating: 5, text: 'Very professional and caring. The online booking made it so convenient.' },
     { name: 'Amit Patel', rating: 5, text: 'Life-changing therapy sessions. Highly recommend to anyone struggling with stress.' }
   ];
 
-  // const handleBookingSubmit = () => {
-  //   if (bookingStep < 3) {
-  //     setBookingStep(bookingStep + 1);
-  //   } else {
-  //     alert('Booking confirmed! You will receive a confirmation email shortly.');
-  //     setShowBookingModal(false);
-  //     setBookingStep(1);
-  //     setBookingData({
-  //       name: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
-  //     });
-  //   }
-  // };
+  // Generate time slots based on day of week and doctor's availability
+  const getTimeSlotsForDate = (dateString) => {
+    if (!dateString) return [];
+    
+    const date = new Date(dateString);
+    const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Morning slots: 10:30 AM to 1:00 PM (30-minute intervals)
+    const morningSlots = [
+      '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM'
+    ];
+    
+    // Evening slots: 6:00 PM to 8:30 PM (30-minute intervals)
+    const eveningSlots = [
+      '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM'
+    ];
+    
+    // Sunday slots: 5:00 PM to 7:00 PM (30-minute intervals)
+    const sundaySlots = [
+      '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM'
+    ];
+    
+    // Sunday (0)
+    if (dayOfWeek === 0) {
+      return sundaySlots;
+    }
+    
+    // Tuesday (2), Thursday (4), Saturday (6) - Evening only
+    if (dayOfWeek === 2 || dayOfWeek === 4 || dayOfWeek === 6) {
+      return eveningSlots;
+    }
+    
+    // Monday (1), Wednesday (3), Friday (5) - Morning & Evening
+    if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) {
+      return [...morningSlots, ...eveningSlots];
+    }
+    
+    return [];
+  };
+
+  // Get day name for display
+  const getDayName = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { weekday: 'long' });
+  };
+
+  // Update available time slots when date changes
+  useEffect(() => {
+    if (bookingData.date) {
+      const slots = getTimeSlotsForDate(bookingData.date);
+      setAvailableTimeSlots(slots);
+      
+      // Reset time if it's not available on the new date
+      if (!slots.includes(bookingData.time)) {
+        setBookingData(prev => ({ ...prev, time: '' }));
+      }
+    }
+  }, [bookingData.date]);
 
   const handleBookingSubmit = async () => {
-  if (bookingStep < 3) {
-    setBookingStep(bookingStep + 1);
-    return;
-  }
+    if (bookingStep < 3) {
+      setBookingStep(bookingStep + 1);
+      return;
+    }
 
-  try {
-    await createAppointment({
-      name: bookingData.name,
-      email: bookingData.email,
-      phone: bookingData.phone,
-      service: bookingData.service,
-      date: bookingData.date,
-      time: bookingData.time,
-      notes: bookingData.notes
-    });
+    try {
+      const response = await createAppointment({
+        name: bookingData.name,
+        email: bookingData.email,
+        phone: bookingData.phone,
+        service: bookingData.service,
+        date: bookingData.date,
+        time: bookingData.time,
+        notes: bookingData.notes
+      });
 
-    alert('Booking confirmed!');
-    setShowBookingModal(false);
-    setBookingStep(1);
-    setBookingData({
-      name: '',
-      email: '',
-      phone: '',
-      date: '',
-      time: '',
-      service: '',
-      notes: ''
-    });
-  } catch (error) {
-    console.error(error);
-    alert('Failed to book appointment. Please try again.');
-  }
-};
-
+      alert('Booking confirmed! You will receive a confirmation via email and WhatsApp.');
+      setShowBookingModal(false);
+      setBookingStep(1);
+      setBookingData({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        time: '',
+        service: '',
+        notes: ''
+      });
+    } catch (error) {
+      console.error(error);
+      alert('Failed to book appointment. Please try again.');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -377,7 +418,7 @@ export default function Home() {
                 {bookingStep === 1 && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Full Name</label>
+                      <label className="block text-sm font-medium mb-2">Full Name *</label>
                       <input
                         type="text"
                         required
@@ -388,7 +429,7 @@ export default function Home() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Email</label>
+                      <label className="block text-sm font-medium mb-2">Email *</label>
                       <input
                         type="email"
                         required
@@ -399,22 +440,23 @@ export default function Home() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Phone</label>
+                      <label className="block text-sm font-medium mb-2">Phone (with country code) *</label>
                       <input
                         type="tel"
                         required
                         value={bookingData.phone}
                         onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                        placeholder="+91 98765 43210"
+                        placeholder="+919876543210"
                       />
+                      <p className="text-xs text-gray-500 mt-1">Format: +91 followed by 10 digits (no spaces)</p>
                     </div>
                   </div>
                 )}
 
                 {bookingStep === 2 && (
                   <div className="space-y-4">
-                    <label className="block text-sm font-medium mb-2">Select Service</label>
+                    <label className="block text-sm font-medium mb-2">Select Service *</label>
                     <div className="grid gap-3">
                       {services.map((service, index) => (
                         <div
@@ -442,7 +484,7 @@ export default function Home() {
                 {bookingStep === 3 && (
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Select Date</label>
+                      <label className="block text-sm font-medium mb-2">Select Date *</label>
                       <input
                         type="date"
                         required
@@ -452,25 +494,49 @@ export default function Home() {
                         min={new Date().toISOString().split('T')[0]}
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Select Time</label>
-                      <div className="grid grid-cols-4 gap-2">
-                        {timeSlots.map((time, index) => (
-                          <button
-                            key={index}
-                            type="button"
-                            onClick={() => setBookingData({ ...bookingData, time })}
-                            className={`py-2 px-3 rounded-lg text-sm transition-all ${
-                              bookingData.time === time
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-gray-100 hover:bg-gray-200'
-                            }`}
-                          >
-                            {time}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                    
+                    {bookingData.date && (
+                      <>
+                        <div className="bg-blue-50 p-4 rounded-lg">
+                          <div className="flex items-center gap-2 text-blue-800">
+                            <Calendar className="h-5 w-5" />
+                            <span className="font-medium">{getDayName(bookingData.date)}</span>
+                          </div>
+                          <p className="text-sm text-blue-600 mt-1">
+                            {availableTimeSlots.length} slots available
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Select Time *</label>
+                          {availableTimeSlots.length > 0 ? (
+                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                              {availableTimeSlots.map((time, index) => (
+                                <button
+                                  key={index}
+                                  type="button"
+                                  onClick={() => setBookingData({ ...bookingData, time })}
+                                  className={`py-2 px-3 rounded-lg text-sm transition-all ${
+                                    bookingData.time === time
+                                      ? 'bg-blue-600 text-white'
+                                      : 'bg-gray-100 hover:bg-gray-200'
+                                  }`}
+                                >
+                                  {time}
+                                </button>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-lg">
+                              <Calendar className="h-12 w-12 mx-auto mb-2 text-gray-400" />
+                              <p className="font-medium">No slots available for this date</p>
+                              <p className="text-sm mt-1">Please select another date</p>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                    
                     <div>
                       <label className="block text-sm font-medium mb-2">Additional Notes (Optional)</label>
                       <textarea
@@ -497,6 +563,7 @@ export default function Home() {
                   <button
                     onClick={handleBookingSubmit}
                     disabled={
+                      (bookingStep === 1 && (!bookingData.name || !bookingData.email || !bookingData.phone)) ||
                       (bookingStep === 2 && !bookingData.service) ||
                       (bookingStep === 3 && (!bookingData.date || !bookingData.time))
                     }
