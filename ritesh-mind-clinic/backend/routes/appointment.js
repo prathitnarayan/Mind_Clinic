@@ -1,12 +1,12 @@
 import express from 'express';
 import Appointment from '../models/Appointment.js';
-import { sendEmailNotification, sendWhatsAppViaTwilio } from '../services/notificationService.js';
+import { sendSMS } from '../services/notificationService.js';
 
 const router = express.Router();
 
 router.post('/appointments', async (req, res) => {
   try {
-    const { name, email, phone, service, date, time, notes } = req.body;
+    const { name, email, phone, location, locationAddress, service, date, time, notes } = req.body;
 
     // Validate required fields
     if (!name || !email || !phone || !service || !date || !time) {
@@ -18,6 +18,8 @@ router.post('/appointments', async (req, res) => {
       name,
       email,
       phone,
+      location,
+      locationAddress,
       service,
       date,
       time,
@@ -32,22 +34,31 @@ router.post('/appointments', async (req, res) => {
     const notifications = [];
     
     // Send Email
+    // try {
+    //   await sendEmailNotification(appointment);
+    //   notifications.push({ type: 'email', status: 'sent' });
+    // } catch (emailError) {
+    //   console.error('Email notification failed:', emailError);
+    //   notifications.push({ type: 'email', status: 'failed' });
+    // }
+
+    // Send SMS
     try {
-      await sendEmailNotification(appointment);
-      notifications.push({ type: 'email', status: 'sent' });
-    } catch (emailError) {
-      console.error('Email notification failed:', emailError);
-      notifications.push({ type: 'email', status: 'failed' });
+      await sendSMS(phone, appointment);
+      notifications.push({ type: 'sms', status: 'sent' });
+    } catch (smsError) {
+      console.error('SMS notification failed:', smsError);
+      notifications.push({ type: 'sms', status: 'failed' });
     }
 
-    // Send WhatsApp
-    try {
-      await sendWhatsAppViaTwilio(phone, appointment);
-      notifications.push({ type: 'whatsapp', status: 'sent' });
-    } catch (whatsappError) {
-      console.error('WhatsApp notification failed:', whatsappError);
-      notifications.push({ type: 'whatsapp', status: 'failed' });
-    }
+    // Send WhatsApp (optional - you can keep or remove this)
+    // try {
+    //   await sendWhatsAppViaTwilio(phone, appointment);
+    //   notifications.push({ type: 'whatsapp', status: 'sent' });
+    // } catch (whatsappError) {
+    //   console.error('WhatsApp notification failed:', whatsappError);
+    //   notifications.push({ type: 'whatsapp', status: 'failed' });
+    // }
 
     res.status(201).json({
       message: 'Appointment created successfully',
