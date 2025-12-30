@@ -29,22 +29,22 @@ export default function Home() {
       name: 'Jagdeo Path Clinic',
       address: 'Pillar No:17, Near Uttam Palace, Jagdeo Path, Patna',
       phone: '+91 98765 43210'
-    },
-    {
-      id: 'L2',
-      name: 'Danapur Clinic',
-      address: 'C-62, New A.G Colony, R.K. Puram, Behind G.D Goenka School, Danapur, Patna',
-      phone: '+91 98765 43211'
-    }
-  ];
+    }];
+  // {
+  //   id: 'L2',
+  //   name: 'Danapur Clinic',
+  //   address: 'C-62, New A.G Colony, R.K. Puram, Behind G.D Goenka School, Danapur, Patna',
+  //   phone: '+91 98765 43211'
+  // }
 
   const services = [
     { name: 'General Consultation', duration: '30 mins', price: '₹500' },
-    { name: 'Mental Health Counseling', duration: '45 mins', price: '₹800' },
-    { name: 'Stress Management', duration: '40 mins', price: '₹700' },
-    { name: 'Family Therapy', duration: '60 mins', price: '₹1000' },
     { name: 'Child Psychology', duration: '45 mins', price: '₹800' },
-    { name: 'Career Counseling', duration: '40 mins', price: '₹700' }
+    { name: 'Stress Management', duration: '40 mins', price: '₹700' },
+    { name: 'Sexual Problems', duration: '60 mins', price: '₹1000' },
+    { name: 'De- Addiction', duration: '45 mins', price: '₹800' },
+    { name: 'Prevention Of Suicidal Behaviour', duration: '40 mins', price: '₹700' },
+    { name: 'Carrer Counselling', duration: '45 mins', price: '₹500' }
   ];
 
   const testimonials = [
@@ -83,29 +83,29 @@ export default function Home() {
         return [...l1Morning, ...l1Evening];
       }
     }
-    else if (locationId === 'L2') {
-      // Location 2: Danapur
-      // Morning: 7:00 AM - 9:00 AM
-      const l2Morning = [
-        '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM'
-      ];
+    // else if (locationId === 'L2') {
+    //   // Location 2: Danapur
+    //   // Morning: 7:00 AM - 9:00 AM
+    //   const l2Morning = [
+    //     '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM'
+    //   ];
 
-      // Evening: 3:00 PM - 5:00 PM
-      const l2Evening = [
-        '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
-      ];
+    //   // Evening: 3:00 PM - 5:00 PM
+    //   const l2Evening = [
+    //     '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
+    //   ];
 
-      // Sunday Morning: 9:00 AM - 1:00 PM
-      const l2SundayMorning = [
-        '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM'
-      ];
+    //   // Sunday Morning: 9:00 AM - 1:00 PM
+    //   const l2SundayMorning = [
+    //     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM'
+    //   ];
 
-      if (dayOfWeek === 0) {
-        return l2SundayMorning;
-      } else {
-        return [...l2Morning, ...l2Evening];
-      }
-    }
+    //   if (dayOfWeek === 0) {
+    //     return l2SundayMorning;
+    //   } else {
+    //     return [...l2Morning, ...l2Evening];
+    //   }
+    // }
 
     return [];
   };
@@ -298,6 +298,10 @@ export default function Home() {
               <p className="text-gray-600 mb-6">
                 We specialize in treating anxiety, depression, stress management, and various mental health concerns. Our mission is to help you achieve optimal mental and emotional well-being.
               </p>
+              <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
+                <p className="text-gray-700 italic">"Your mental health is just as important as your physical health. Let's work together on your journey to wellness."</p>
+                <p className="text-sm text-gray-600 mt-2">- Dr. Ritesh</p>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
                   <Award className="h-10 w-10 text-blue-600 flex-shrink-0" />
@@ -306,28 +310,53 @@ export default function Home() {
                     <div className="text-sm text-gray-600">Licensed & Board Certified</div>
                   </div>
                 </div>
-                {/* <div className="flex items-start gap-3">
-                  <Users className="h-6 w-6 text-blue-600 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold">Expert Team</div>
-                    <div className="text-sm text-gray-600">Experienced Professionals</div>
-                  </div>
-                </div> */}
                 <div className="flex items-start gap-3">
-                  <Building2 className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <Building2 className="h-10 w-10 text-blue-600 flex-shrink-0" />
                   <div>
                     <div className="font-semibold">Two Locations</div>
                     <div className="text-sm text-gray-600">Convenient Access</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Heart className="h-10 w-10 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold">Holistic Approach</div>
+                    <div className="text-sm text-gray-600">Mind & Body Wellness</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Clock className="h-10 w-10 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold">Flexible Timings</div>
+                    <div className="text-sm text-gray-600">Morning & Evening Slots</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-10 w-10 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold">Confidential Care</div>
+                    <div className="text-sm text-gray-600">Safe & Private Sessions</div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Users className="h-10 w-10 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold">All Age Groups</div>
+                    <div className="text-sm text-gray-600">Children to Adults</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Services Section */}
-      <section id="services" className="py-16 bg-gray-50">
+      < section id="services" className="py-16 bg-gray-50" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
@@ -360,10 +389,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-16 bg-white">
+      < section id="testimonials" className="py-16 bg-white" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Patients Say</h2>
@@ -383,16 +412,18 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 bg-gray-50">
+      < section id="contact" className="py-16 bg-gray-50" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Locations</h2>
-            <p className="text-xl text-gray-600">Visit us at either of our convenient locations</p>
+            {/* <p className="text-xl text-gray-600">Visit us at either of our convenient locations</p> */}
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          {/* <div className="grid md:grid-cols-2 gap-8">    -> for 2 locations */}
+
+          <div className="grid md:justify-items-center">
             {locations.map((location) => (
               <div key={location.id} className="bg-white p-6 rounded-lg shadow-lg">
                 <div className="flex items-start gap-4 mb-4">
@@ -426,223 +457,238 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
+      < footer className="bg-gray-900 text-white py-8" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p>&copy; 2024 Ritesh Mind Clinic. All rights reserved.</p>
           <p className="text-gray-400 mt-2">Professional Mental Health & Wellness Services</p>
         </div>
-      </footer>
+      </footer >
 
       {/* Booking Modal */}
-      {showBookingModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Book Appointment</h2>
-                <button onClick={() => {
-                  setShowBookingModal(false);
-                  setBookingStep(1);
-                }} className="text-gray-500 hover:text-gray-700">
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-
-              <div className="flex justify-between mb-8 overflow-x-auto pb-2">
-                {[1, 2, 3, 4].map((step) => (
-                  <div key={step} className={`flex items-center ${bookingStep >= step ? 'text-blue-600' : 'text-gray-400'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${bookingStep >= step ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>{step}</div>
-                    <span className="ml-2 hidden sm:inline text-sm">
-                      {step === 1 ? 'Personal' : step === 2 ? 'Location' : step === 3 ? 'Service' : 'Date & Time'}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Progress Steps
-              <div className="flex justify-between mb-8">
-                <div className={`flex items-center ${bookingStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${bookingStep >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>1</div>
-                  <span className="ml-2 hidden sm:inline">Personal Info</span>
+      {
+        showBookingModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold">Book Appointment</h2>
+                  <button onClick={() => {
+                    setShowBookingModal(false);
+                    setBookingStep(1);
+                  }} className="text-gray-500 hover:text-gray-700">
+                    <X className="h-6 w-6" />
+                  </button>
                 </div>
-                <div className={`flex items-center ${bookingStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${bookingStep >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>2</div>
-                  <span className="ml-2 hidden sm:inline">Select Service</span>
-                </div>
-                <div className={`flex items-center ${bookingStep >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${bookingStep >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>3</div>
-                  <span className="ml-2 hidden sm:inline">Date & Time</span>
-                </div>
-              </div> */}
 
-              <div>
-                {bookingStep === 1 && (
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Full Name *</label>
-                      <input
-                        type="text"
-                        value={bookingData.name}
-                        onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600"
-                        placeholder="Enter your name"
-                      />
+                <div className="flex justify-between mb-8 overflow-x-auto pb-2">
+                  {[1, 2, 3, 4].map((step) => (
+                    <div key={step} className={`flex items-center ${bookingStep >= step ? 'text-blue-600' : 'text-gray-400'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${bookingStep >= step ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>{step}</div>
+                      <span className="ml-2 hidden sm:inline text-sm">
+                        {step === 1 ? 'Personal' : step === 2 ? 'Location' : step === 3 ? 'Service' : 'Date & Time'}
+                      </span>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Email *</label>
-                      <input
-                        type="email"
-                        value={bookingData.email}
-                        onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Phone *</label>
-                      <input
-                        type="tel"
-                        value={bookingData.phone}
-                        onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600"
-                        placeholder="+919876543210"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Format: +91 followed by 10 digits</p>
-                    </div>
-                  </div>
-                )}
+                  ))}
+                </div>
 
-                {bookingStep === 2 && (
-                  <div className="space-y-4">
-                    <label className="block text-sm font-medium mb-2">Select Location *</label>
-                    {locations.map((location) => (
-                      <div
-                        key={location.id}
-                        onClick={() => setBookingData({ ...bookingData, location: location.id })}
-                        className={`p-4 border-2 rounded-lg cursor-pointer ${
-                          bookingData.location === location.id ? 'border-blue-600 bg-blue-50' : 'border-gray-200 hover:border-blue-300'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <MapPin className={`h-5 w-5 flex-shrink-0 mt-1 ${bookingData.location === location.id ? 'text-blue-600' : 'text-gray-400'}`} />
-                          <div className="flex-1">
-                            <div className="font-semibold mb-1">{location.name}</div>
-                            <div className="text-sm text-gray-600 mb-2">{location.address}</div>
-                            <div className="text-xs text-gray-500 flex items-center gap-1 mb-2">
-                              <Phone className="h-3 w-3" /> {location.phone}
-                            </div>
-                            <div className="bg-gray-100 p-2 rounded text-xs">
-                              <span className="font-medium">Timings: </span>
-                              {location.id === 'L1' ? 
-                                'Mon-Sat: 10AM-1PM, 6PM-8PM | Sun: 5PM-8PM' : 
-                                'Mon-Sat: 7AM-9AM, 3PM-5PM | Sun: 9AM-1PM'
-                              }
+                <div>
+                  {bookingStep === 1 && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Full Name *</label>
+                        <input
+                          type="text"
+                          value={bookingData.name}
+                          onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600"
+                          placeholder="Enter your name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Email *</label>
+                        <input
+                          type="email"
+                          value={bookingData.email}
+                          onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600"
+                          placeholder="your@email.com"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Phone *</label>
+                        <input
+                          type="tel"
+                          value={bookingData.phone}
+                          onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600"
+                          placeholder="+919876543210"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Format: +91 followed by 10 digits</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {bookingStep === 2 && (
+                    <div className="space-y-4">
+                      <label className="block text-sm font-medium mb-2">Select Location *</label>
+                      {locations.map((location) => (
+                        <div
+                          key={location.id}
+                          onClick={() => setBookingData({ ...bookingData, location: location.id })}
+                          className={`p-4 border-2 rounded-lg cursor-pointer ${bookingData.location === location.id ? 'border-blue-600 bg-blue-50' : 'border-gray-200 hover:border-blue-300'
+                            }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <MapPin className={`h-5 w-5 flex-shrink-0 mt-1 ${bookingData.location === location.id ? 'text-blue-600' : 'text-gray-400'}`} />
+                            <div className="flex-1">
+                              <div className="font-semibold mb-1">{location.name}</div>
+                              <div className="text-sm text-gray-600 mb-2">{location.address}</div>
+                              <div className="text-xs text-gray-500 flex items-center gap-1 mb-2">
+                                <Phone className="h-3 w-3" /> {location.phone}
+                              </div>
+                              <div className="bg-gray-100 p-2 rounded text-xs">
+                                <span className="font-medium">Timings: </span>
+                                {location.id === 'L1' ?
+                                  'Mon-Sat: 10AM-1PM, 6PM-8PM | Sun: 5PM-8PM' :
+                                  'Mon-Sat: 7AM-9AM, 3PM-5PM | Sun: 9AM-1PM'
+                                }
+                              </div>
                             </div>
                           </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {bookingStep === 3 && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Select Service *</label>
+                        <div className="grid gap-3">
+                          {services.map((service, index) => (
+                            <div
+                              key={index}
+                              onClick={() => setBookingData({ ...bookingData, service: service.name })}
+                              className={`p-4 border-2 rounded-lg cursor-pointer ${bookingData.service === service.name ? 'border-blue-600 bg-blue-50' : 'border-gray-200 hover:border-blue-300'
+                                }`}
+                            >
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <div className="font-semibold">{service.name}</div>
+                                  <div className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+                                    <Clock className="h-4 w-4" />
+                                    {service.duration}
+                                  </div>
+                                </div>
+                                <div className="text-blue-600 font-semibold">{service.price}</div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                )}
-
-                {bookingStep === 3 && (
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Select Date *</label>
-                      <input
-                        type="date"
-                        required
-                        value={bookingData.date}
-                        onChange={(e) => setBookingData({ ...bookingData, date: e.target.value })}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                        min={new Date().toISOString().split('T')[0]}
-                      />
                     </div>
-
-                    {bookingData.date && (
-                      <>
-                        <div className="bg-blue-50 p-4 rounded-lg">
-                          <div className="flex items-center gap-2 text-blue-800">
-                            <Calendar className="h-5 w-5" />
-                            <span className="font-medium">{getDayName(bookingData.date)}</span>
-                          </div>
-                          <p className="text-sm text-blue-600 mt-1">
-                            {availableTimeSlots.length} slots available
-                          </p>
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium mb-2">Select Time *</label>
-                          {availableTimeSlots.length > 0 ? (
-                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                              {availableTimeSlots.map((time, index) => (
-                                <button
-                                  key={index}
-                                  type="button"
-                                  onClick={() => setBookingData({ ...bookingData, time })}
-                                  className={`py-2 px-3 rounded-lg text-sm transition-all ${bookingData.time === time
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-100 hover:bg-gray-200'
-                                    }`}
-                                >
-                                  {time}
-                                </button>
-                              ))}
-                            </div>
-                          ) : (
-                            <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-lg">
-                              <Calendar className="h-12 w-12 mx-auto mb-2 text-gray-400" />
-                              <p className="font-medium">No slots available for this date</p>
-                              <p className="text-sm mt-1">Please select another date</p>
-                            </div>
-                          )}
-                        </div>
-                      </>
-                    )}
-
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Additional Notes (Optional)</label>
-                      <textarea
-                        value={bookingData.notes}
-                        onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                        rows="3"
-                        placeholder="Any specific concerns or requirements..."
-                      />
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex gap-4 mt-6">
-                  {bookingStep > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => setBookingStep(bookingStep - 1)}
-                      className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
-                    >
-                      Back
-                    </button>
                   )}
-                  <button
-                    onClick={handleBookingSubmit}
-                    disabled={
-                      (bookingStep === 1 && (!bookingData.name || !bookingData.email || !bookingData.phone)) ||
-                      (bookingStep === 2 && !bookingData.service) ||
-                      (bookingStep === 3 && (!bookingData.date || !bookingData.time))
-                    }
-                    className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-                  >
-                    {bookingStep === 3 ? 'Confirm Booking' : 'Next'}
-                  </button>
+
+                  {bookingStep === 4 && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Select Date *</label>
+                        <input
+                          type="date"
+                          required
+                          value={bookingData.date}
+                          onChange={(e) => setBookingData({ ...bookingData, date: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                          min={new Date().toISOString().split('T')[0]}
+                        />
+                      </div>
+
+                      {bookingData.date && (
+                        <>
+                          <div className="bg-blue-50 p-4 rounded-lg">
+                            <div className="flex items-center gap-2 text-blue-800">
+                              <Calendar className="h-5 w-5" />
+                              <span className="font-medium">{getDayName(bookingData.date)}</span>
+                            </div>
+                            <p className="text-sm text-blue-600 mt-1">
+                              {availableTimeSlots.length} slots available
+                            </p>
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium mb-2">Select Time *</label>
+                            {availableTimeSlots.length > 0 ? (
+                              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                                {availableTimeSlots.map((time, index) => (
+                                  <button
+                                    key={index}
+                                    type="button"
+                                    onClick={() => setBookingData({ ...bookingData, time })}
+                                    className={`py-2 px-3 rounded-lg text-sm transition-all ${bookingData.time === time
+                                      ? 'bg-blue-600 text-white'
+                                      : 'bg-gray-100 hover:bg-gray-200'
+                                      }`}
+                                  >
+                                    {time}
+                                  </button>
+                                ))}
+                              </div>
+                            ) : (
+                              <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-lg">
+                                <Calendar className="h-12 w-12 mx-auto mb-2 text-gray-400" />
+                                <p className="font-medium">No slots available for this date</p>
+                                <p className="text-sm mt-1">Please select another date</p>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )}
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Additional Notes (Optional)</label>
+                        <textarea
+                          value={bookingData.notes}
+                          onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
+                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                          rows="3"
+                          placeholder="Any specific concerns or requirements..."
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex gap-4 mt-6">
+                    {bookingStep > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => setBookingStep(bookingStep - 1)}
+                        className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50"
+                      >
+                        Back
+                      </button>
+                    )}
+                    <button
+                      onClick={handleBookingSubmit}
+                      disabled={
+                        (bookingStep === 1 && (!bookingData.name || !bookingData.email || !bookingData.phone)) ||
+                        (bookingStep === 2 && !bookingData.location) ||
+                        (bookingStep === 3 && !bookingData.service) ||
+                        (bookingStep === 4 && (!bookingData.date || !bookingData.time))
+                      }
+                      className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      {bookingStep === 4 ? 'Confirm Booking' : 'Next'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 }
