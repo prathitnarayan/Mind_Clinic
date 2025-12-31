@@ -23,22 +23,26 @@ export default function Home() {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
-  const locations = [
+  const allLocations = [
     {
       id: 'L1',
       name: 'Jagdeo Path Clinic',
       address: 'Pillar No:17, Near Uttam Palace, Jagdeo Path, Patna',
       phone: '+91 98765 43210',
-      active: true
+      active: true,
+      comingSoon: false
     },
     {
       id: 'L2',
       name: 'Danapur Clinic',
       address: 'C-62, New A.G Colony, R.K. Puram, Behind G.D Goenka School, Danapur, Patna',
       phone: '+91 98765 43211',
-      active: false
+      active: false,
+      comingSoon: true
     }
-  ].filter(loc => loc.active);
+  ];
+  const locations = allLocations.filter(loc => loc.active);
+  const comingSoonLocations = allLocations.filter(loc => loc.comingSoon);
 
 
   const services = [
@@ -427,6 +431,7 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 justify-items-center">
+            {/* Active Locations */}
             {locations.map((location) => (
               <div key={location.id} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
                 <div className="flex items-start gap-4 mb-4">
@@ -458,40 +463,43 @@ export default function Home() {
                 </div>
               </div>
             ))}
-            {/* Coming Soon Card */}
-            {locations.some(loc => loc.comingSoon) && (
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg opacity-75 border-2 border-dashed border-blue-300">
+
+            {/* Coming Soon Locations */}
+            {comingSoonLocations.map((location) => (
+              <div key={location.id} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg opacity-75 border-2 border-dashed border-blue-300">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="bg-blue-100 p-3 rounded-full flex-shrink-0">
                     <MapPin className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900">New Location</h3>
+                      <h3 className="text-xl font-semibold text-gray-900">{location.name}</h3>
                       <span className="bg-blue-100 text-blue-600 text-xs font-semibold px-2 py-1 rounded">
                         Coming Soon
                       </span>
                     </div>
-                    <p className="text-gray-600 text-sm">
-                      We're expanding! A second location will be opening soon in Danapur.
+                    <p className="text-gray-600 text-sm mb-3">
+                      {location.address}
+                    </p>
+                    <p className="text-gray-500 text-xs italic">
+                      We're expanding! This location will be opening soon.
                     </p>
                   </div>
                 </div>
               </div>
-            )}
-
+            ))}
           </div>
         </div>
-      </section >
+      </section>
+
 
       {/* Footer */}
-      < footer className="bg-gray-900 text-white py-8" >
+      <footer className="bg-gray-900 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p>&copy; 2024 Ritesh Mind Clinic. All rights reserved.</p>
           <p className="text-gray-400 mt-2">Professional Mental Health & Wellness Services</p>
         </div>
-      </footer >
-
+      </footer>
       {/* Booking Modal */}
       {
         showBookingModal && (
